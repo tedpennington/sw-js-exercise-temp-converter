@@ -16,15 +16,18 @@ function determineConverter(){
     if(fSelected.checked){
         // console.log("toFahrenheit");
         toFahrenheit(tempInput.value);
-    }else {
+    }else if(cSelected.checked){
         // console.log("toCelsius");
         toCelsius(tempInput.value);
+    }else{
+        alert("You must select a temperature scale first");
     }
 }
 
 // Clear Input Field
 function clearField(){
     tempInput.value = "";
+    tempInput.focus();
 }
 // Validate Input Field (check that something's in there)
 
@@ -41,21 +44,21 @@ function clearField(){
 
 // Converters
 function toFahrenheit (temp) {
-    console.log("temp in toFahrenheit", temp);
+    // console.log("temp in toFahrenheit", temp);
     var cTemp = (temp * 1.8) + 32;
-    changeColor(cTemp, "f");
+    changeColor(cTemp, "F");
 }
 function toCelsius (temp) {
-    console.log("temp in toCelsius", temp);
+    // console.log("temp in toCelsius", temp);
     var fTemp = (temp - 32) / 1.8;
-    changeColor(fTemp, "c");
+    changeColor(fTemp, "C");
 }
 
 // Change color based on temp, doing so for each temp scale (F/C)
 function changeColor (temp, scale) {
     // console.log("temp", temp, "scale", scale);
     convertedTemp.classList.remove("red", "blue", "green")
-    if(scale === "f"){
+    if(scale === "F"){
         if(temp > 90){
             convertedTemp.classList.add("red");
         } else if(temp < 32){
@@ -72,15 +75,32 @@ function changeColor (temp, scale) {
             convertedTemp.classList.add("green");
         }
     }
-    outputResult(temp);
+    outputResult(temp, scale);
+    clearField();
 }
 
 // Output result
-function outputResult(temp){
-    convertedTemp.innerHTML = `<p>${temp}</p>`;
+function outputResult(temp, scale){
+    // Outputing phrase that says
+    var initialScale;
+    if(scale === "F"){
+        initialScale = "C";
+    }else{
+        initialScale = "F";
+    }
+    convertedTemp.innerHTML = `<p>Your temperature of ${tempInput.value}&deg; ${initialScale} has been converted to ${temp}&deg; ${scale}</p>`;
 }
 
-submitButton.addEventListener("click", determineConverter)
+// Do the stuff!
+
+submitButton.addEventListener("click", determineConverter);
+tempInput.addEventListener("keyup", function(event){
+    // console.log("event", event)
+    if(event.keyCode === 13){
+        determineConverter();
+    }
+})
+clearButton.addEventListener("click", clearField);
 
 
 // Instructions:
