@@ -102,6 +102,7 @@ tempInput.addEventListener("keyup", function(event){
 })
 clearButton.addEventListener("click", clearField);
 
+// ***EXERCISE COMPLETE***
 
 // Instructions:
 //Write a program that will convert a temperature from fahrenheit to celsius, or from celsius to fahrenheit.
